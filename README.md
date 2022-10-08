@@ -2,13 +2,17 @@
 
 ## Install
 ```
-node.js - https://nodejs.org/dist/v16.17.1/node-v16.17.1-x64.msi
+node.js - 
+https://nodejs.org/dist/v16.17.1/node-v16.17.1-x64.msi
 
 *Make Sure V2 is installed NOT v3*
-vue.js - https://v2.vuejs.org/v2/guide/installation.html *Make Sure V2 is installed NOT v3*
+vue.js - 
+https://v2.vuejs.org/v2/guide/installation.html *Make Sure V2 is installed NOT v3*
 
-vuetify.js - https://vuetifyjs.com/en/getting-started/installation/
-axios - https://www.npmjs.com/package/axios
+vuetify.js - 
+https://vuetifyjs.com/en/getting-started/installation/
+axios - 
+https://www.npmjs.com/package/axios
 
 ```
 ## Project setup

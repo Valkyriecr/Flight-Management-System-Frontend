@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import AdminView from '../views/AdminView.vue'
+import CheckInView from '../views/CheckInView.vue'
+import FlightCheckerView from '../views/FlightCheckerView.vue'
 
 Vue.use(VueRouter)
 
@@ -9,6 +12,21 @@ const routes = [
     path: '/',
     name: 'home',
     component: HomeView
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: AdminView
+  },
+  {
+    path: '/flight-checker',
+    name: 'flight-checker',
+    component: FlightCheckerView
+  },
+  {
+    path: '/check-in',
+    name: 'check-in',
+    component: CheckInView
   },
   {
     path: '/about',

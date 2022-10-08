@@ -19,13 +19,15 @@
           hide-details="auto"
           :rules="IdRule"
         ></v-text-field>
-        <v-text-field
-          label="Ticket Number"
-          :rules="rules"
-          hide-details="auto"
-          value="tk1234"
-          disabled
-        ></v-text-field>
+        <v-spacer class="pa-5"></v-spacer>
+        <v-combobox
+          v-model="selectTicket"
+          :tickets="Ticket"
+          label="Tickets"
+          hide-selected
+          outlined
+          dense
+        ></v-combobox>
         <v-text-field label="Flight ID" hide-details="auto"></v-text-field>
       </div>
       <v-spacer class="pa-5"></v-spacer>
@@ -65,9 +67,23 @@ export default {
   }),
   data() {
     return {
-      selectFlight: ["Select Flight"],
+      selectTicket: ["Select Ticket"],
       selectArrival: ["Destination Location"],
       items: ["FA-262", "FA-202", "FA-200", "FA-203"],
+      ticket:["Tk1234"],
+
+      checkin:{
+        ticketId:null,
+        FirstName:"",
+        LastName:"",
+        IdNumber:"",
+        FlightId:"",
+      },
+      luggage:{
+        weight:null,
+        luggageType:"",
+        passenger:"????",
+      }
     };
   },
   

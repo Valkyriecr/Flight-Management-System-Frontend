@@ -1,13 +1,13 @@
 # flight-management-system-frontend
 
 ## Install
-```
+
 node.js - 
 https://nodejs.org/dist/v16.17.1/node-v16.17.1-x64.msi
 
 *Make Sure V2 is installed NOT v3*
 vue.js - 
-https://v2.vuejs.org/v2/guide/installation.html *Make Sure V2 is installed NOT v3*
+https://v2.vuejs.org/v2/guide/installation.html
 
 vuetify.js - 
 https://vuetifyjs.com/en/getting-started/installation/

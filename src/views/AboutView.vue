@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card>
-      <h3>Check Flights Routes</h3>
+      <h2>Check Flights Routes</h2>
       <v-btn class="" outlined color="indigo" to="/flight-checker"
         >Check Flight Routes</v-btn
       >

@@ -1,7 +1,7 @@
 <template>
   <div class="about pa-6">
     <v-card class="about pa-6">
-      <h1>Check-in</h1>
+      <h2>Check-in</h2>
       <div>
         <h3>Passenger</h3>
         <v-text-field

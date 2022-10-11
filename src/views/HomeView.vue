@@ -1,7 +1,7 @@
 <template>
   <div class="about pa-6">
     <v-card class="about pa-6">
-      <h1>My Booking</h1>
+      <h2>My Booking</h2>
       <div>
         <v-text-field
           label="Ticket Number"

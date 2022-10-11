@@ -2,27 +2,29 @@
   <div class="pa-6">
     <v-card class="pa-6">
       <div>
-        <h1>Show Table</h1>
-        <v-spacer class="pa-2"></v-spacer>
-        <v-btn
-          class=""
-          @click="showFlight = !showFlight"
-          outlined
-          color="indigo"
-          >Flights</v-btn
-        >
-        <v-divider flex vertical class="pa-2"></v-divider>
-        <v-btn
-          @click="showPassenger = !showPassenger"
-          outlined
-          color="indigo"
-          flex
-          >Passengers</v-btn
-        >
-        <v-divider flex vertical class="pa-2"></v-divider>
-        <v-btn @click="showCrew = !showCrew" outlined color="indigo" flex
-          >Crews</v-btn
-        >
+        <h2>Show Table</h2>
+        <div flex>
+          <v-spacer class="pa-2"></v-spacer>
+          <v-btn
+            class=""
+            @click="showFlight = !showFlight"
+            outlined
+            color="indigo"
+            >Flights</v-btn
+          >
+
+          <v-btn
+            @click="showPassenger = !showPassenger"
+            outlined
+            color="indigo"
+            flex
+            >Passengers</v-btn
+          >
+
+          <v-btn @click="showCrew = !showCrew" outlined color="indigo" flex
+            >Crews</v-btn
+          >
+        </div>
       </div>
       <div>
         <div v-show="showFlight">

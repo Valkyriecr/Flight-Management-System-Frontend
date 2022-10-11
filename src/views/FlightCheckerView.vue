@@ -1,7 +1,7 @@
 <template>
   <div class="about pa-6">
     <v-card class="about pa-6">
-      <h1>Find Flight</h1>
+      <h2>Find Flight</h2>
       <div>
         <v-combobox
           v-model="selectCountry"

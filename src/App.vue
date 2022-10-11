@@ -68,14 +68,15 @@
 
 
 <script>
+import AdminView from './views/AdminView.vue';
 
 export default {
-  props: {
-   
-  },
-  components: {
+  props: { 
     
   },
+  components: {
+    AdminView
+},
   data: () => ({
     items: [
       { title: "Home", icon: "mdi-home", to: "/" },

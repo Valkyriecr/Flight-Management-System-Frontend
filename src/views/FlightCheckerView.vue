@@ -46,12 +46,9 @@
 <script>
 export default {
   data: () => ({
-    NameRule: [
+    Rule: [
       (value) => !!value || "Required.",
       (value) => (value && value.length >= 2) || "Min 2 characters",
-    ],
-    IdRule: [
-      (value) => !!value || "Required.",
       (value) => (value && value.length == 13) || "Min 13 characters",
     ],
   }),

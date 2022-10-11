@@ -3,7 +3,7 @@
     <v-card class="about pa-6">
       <h2>Find Flight</h2>
       <div>
-        <v-combobox
+        <v-autocomplete
           v-model="selectCountry"
           :items="Airports"
           label="Country"
@@ -11,8 +11,9 @@
           hide-selected
           outlined
           dense
-        ></v-combobox>
-        <v-combobox
+          
+        ></v-autocomplete>
+        <v-autocomplete
           v-model="selectCity"
           :items="Airports"
           label="City"
@@ -20,8 +21,8 @@
           hide-selected
           outlined
           dense
-        ></v-combobox>
-        <v-combobox
+        ></v-autocomplete>
+        <v-autocomplete
           v-model="selectDepart"
           :items="Airports"
           label="Depart"
@@ -29,8 +30,8 @@
           hide-selected
           outlined
           dense
-        ></v-combobox>
-        <v-combobox
+        ></v-autocomplete>
+        <v-autocomplete
           v-model="selectArrival"
           :items="Airports"
           label="Arrive"
@@ -38,21 +39,53 @@
           hide-selected
           outlined
           dense
-        ></v-combobox>
+        ></v-autocomplete>
+      </div>
+      <div>
+        <v-autocomplete
+          v-model="selectCountry"
+          :items="Airports"
+          label="Country"
+          clearable
+          hide-selected
+          outlined
+          dense
+        ></v-autocomplete>
+        <v-autocomplete
+          v-model="selectCity"
+          :items="Airports"
+          label="City"
+          clearable
+          hide-selected
+          outlined
+          dense
+        ></v-autocomplete>
+        <v-autocomplete
+          v-model="selectDepart"
+          :items="Airports"
+          label="Depart"
+          clearable
+          hide-selected
+          outlined
+          dense
+        ></v-autocomplete>
+        <v-autocomplete
+          v-model="selectArrival"
+          :items="Airports"
+          label="Arrive"
+          clearable
+          hide-selected
+          outlined
+          dense
+        ></v-autocomplete>
       </div>
     </v-card>
   </div>
 </template>
 <script>
 export default {
-  data: () => ({
-    Rule: [
-      (value) => !!value || "Required.",
-      (value) => (value && value.length >= 2) || "Min 2 characters",
-      (value) => (value && value.length == 13) || "Min 13 characters",
-    ],
-  }),
-  data() {
+  data()  {
+    
     return {
       selectCountry: ["Select Country"],
       selectCity: ["Select City"],

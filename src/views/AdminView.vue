@@ -44,9 +44,9 @@
 </template>
 
 <script>
-import FlightTable from "@/components/FlightTable.vue";
-import PassengerTable from "@/components/PassengerTable.vue";
-import CabinCrewTable from "@/components/CabinCrewTable.vue";
+import FlightTable from "@/components/tables/FlightTable.vue";
+import PassengerTable from "@/components/tables/PassengerTable.vue";
+import CabinCrewTable from "@/components/tables/CabinCrewTable.vue";
 export default {
   components: {
     FlightTable,

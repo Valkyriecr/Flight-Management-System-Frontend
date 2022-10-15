@@ -26,7 +26,7 @@ class CrewDataService {
     }
 
     findByStaffId(staffId) {
-        return http.get(`/cabinCrew?passengerId=${passengerId}`);
+        return http.get(`/cabinCrew?staffId=${staffId}`);
     }
 
 }

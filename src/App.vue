@@ -27,12 +27,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app
-      color="primary"
-      dark
-      prominent
-      src="plane.jpg"
-    >
+    <v-app-bar app color="primary" dark prominent src="plane.jpg">
       <template v-slot:img="{ props }">
         <v-img
           v-bind="props"
@@ -40,7 +35,7 @@
         ></v-img>
       </template>
 
-      <v-app-bar-nav-icon @click="drawer=!drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-app-bar-title></v-app-bar-title>
 
@@ -68,20 +63,25 @@
 
 
 <script>
-import AdminView from './views/AdminView.vue';
+import AdminView from "./views/AdminView.vue";
 
 export default {
-  props: { 
-    
+  name:"Fly Forward",
+  mounted() {
+    document.title = "Fly Forward";
   },
+  props: {},
   components: {
-    AdminView
-},
+    AdminView,
+  },
   data: () => ({
     items: [
       { title: "Home", icon: "mdi-home", to: "/" },
       {
-        title: "Flight Checker", icon: "mdi-airplane-takeoff", to: "/flight-checker",},
+        title: "Flight Checker",
+        icon: "mdi-airplane-takeoff",
+        to: "/flight-checker",
+      },
       { title: "Check-in", icon: "mdi-ticket-confirmation", to: "/check-in" },
       { title: "Admin", icon: "mdi-shield-crown", to: "/admin" },
     ],

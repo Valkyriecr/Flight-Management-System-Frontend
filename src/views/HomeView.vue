@@ -22,16 +22,14 @@
           <v-spacer class="pa-2"></v-spacer>
         </v-form>
         <v-btn class="" outlined color="indigo" @click="findTicket"
-        >Check-in</v-btn
-      >
+          >Check-in</v-btn
+        >
       </div>
-      
-      <div v-else>
-      <v-textarea>{{ ticket }}</v-textarea>
-    </div>
-    </v-card>
 
-    
+      <div v-else>
+        <v-textarea>{{ ticket }}</v-textarea>
+      </div>
+    </v-card>
   </div>
 </template>
 
@@ -60,20 +58,16 @@ export default {
         ticketId: this.ticket.ticketId,
         passengerId: this.ticket.passengerId,
       };
-      TicketDataService.create(data)
-        .then((response) => {
-          this.ticket.ticketId = response.data.ticketId;
-          console.log(response.data);
-          this.found = true;
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    },
-
-    newTicket() {
-      this.found = false;
-      this.ticket = {};
+      console.log(data),
+        TicketDataService.create(data)
+          .then((response) => {
+            this.ticket.ticketId = response.data.ticketId;
+            console.log(response.data);
+            this.found = true;
+          })
+          .catch((e) => {
+            console.log(e);
+          });
     },
   },
 };

@@ -4,48 +4,49 @@
       <h2>Check-in</h2>
       <div>
         <v-form>
-          <h3>Passenger</h3>
+          <h3>Passenger Details</h3>
           <v-text-field
+            v-model="checkin.name"
             label="First Name"
             hide-details="auto"
             :rules="[rules.required, rules.min]"
           ></v-text-field>
           <v-text-field
+            v-model="checkin.LastName"
             label="Last Name"
             hide-details="auto"
             :rules="[rules.required, rules.min]"
           ></v-text-field>
           <v-text-field
+            v-model="checkin.passengerId"
             label="ID Number"
             hide-details="auto"
-            value="9510095080080"
-            readonly
             :rules="[rules.required, rules.id]"
             maxlength="13"
             filled
           ></v-text-field>
           <v-text-field
+            v-model="checkin.ticketId"
             label="Ticket ID"
             hide-details="auto"
-            value="TK9510"
-            readonly
             :rules="[rules.required, rules.min]"
             filled
           ></v-text-field>
 
           <v-text-field
+            v-model="checkin.flightId"
             label="Flight ID"
             hide-details="auto"
             :rules="[rules.required, rules.min]"
-            readonly
             filled
-          ></v-text-field
-        ></v-form>
+          >
+          </v-text-field>
+        </v-form>
       </div>
       <v-spacer class="pa-5"></v-spacer>
       <div>
         <v-form>
-          <h3>Luggage</h3>
+          <h3>Luggage Details</h3>
           <v-spacer class="pa-2"></v-spacer>
           <v-autocomplete
             v-model="selectLuggage"
@@ -63,8 +64,9 @@
             hide-details="auto"
             type="number"
             :rules="[rules.required]"
-          ></v-text-field
-        ></v-form>
+          >
+          </v-text-field>
+        </v-form>
       </div>
       <v-btn class="" outlined color="indigo" to="/flight-checker"
         >Check-in</v-btn

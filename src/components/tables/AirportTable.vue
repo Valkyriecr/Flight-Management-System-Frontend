@@ -1,10 +1,5 @@
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="airports"
-    sort-by="airportId"
-    class="elevation-1"
-  >
+  <v-data-table :headers="headers" :items="airports" sort-by="airportId" class="elevation-1">
     <template v-slot:top>
       <v-toolbar flat>
         <v-toolbar-title>Cabin airports</v-toolbar-title>
@@ -25,22 +20,13 @@
               <v-container>
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      v-model="editedItem.airportId"
-                      label="Airport ID"
-                    ></v-text-field>
+                    <v-text-field v-model="editedItem.airportId" label="Airport ID"></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      v-model="editedItem.cityId"
-                      label="City ID"
-                    ></v-text-field>
+                    <v-text-field v-model="editedItem.cityId" label="City ID"></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      v-model="editedItem.airportName"
-                      label="Airport Name"
-                    ></v-text-field>
+                    <v-text-field v-model="editedItem.airportName" label="Airport Name"></v-text-field>
                   </v-col>
                 </v-row>
               </v-container>
@@ -55,17 +41,11 @@
         </v-dialog>
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
-            <v-card-title class="text-h5"
-              >Are you sure you want to delete this item?</v-card-title
-            >
+            <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeDelete"
-                >Cancel</v-btn
-              >
-              <v-btn color="blue darken-1" text @click="deleteItemConfirm"
-                >OK</v-btn
-              >
+              <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
+              <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
               <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>

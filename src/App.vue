@@ -66,7 +66,7 @@
 import AdminView from "./views/AdminView.vue";
 
 export default {
-  name:"Fly Forward",
+  name:"FlyForward",
   mounted() {
     document.title = "Fly Forward";
   },

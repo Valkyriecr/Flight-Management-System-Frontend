@@ -1,7 +1,7 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="luggage"
+    :items="luggages"
     sort-by="Id"
     class="elevation-1"
   >
@@ -32,23 +32,26 @@
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
-                      v-model="editedItem.firstName"
-                      label="First Name"
+                      v-model="editedItem.passengerId"
+                      label="Passenger ID"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
-                      v-model="editedItem.lastName"
-                      label="Last Name"
+                      v-model="editedItem.weight"
+                      label="Luggage Weight"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
-                      v-model="editedItem.email"
-                      label="Email"
+                      v-model="editedItem.luggageType"
+                      label="Luggage Type"
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="4"> </v-col>
+                  <v-col cols="12" sm="6" md="4"><v-text-field
+                      v-model="editedItem.isOverWeight"
+                      label="Luggage Overweight"
+                    ></v-text-field></v-col>
                 </v-row>
               </v-container>
             </v-card-text>
@@ -147,25 +150,25 @@ export default {
     initialize() {
       this.luggages = [
         {
-          Id: "",
-          passengerId: "",
-          weight: "",
-          luggageType: "",
-          isOverWeight: "",
+          Id: "1",
+          passengerId: "9501095800080",
+          weight: "23",
+          luggageType: "Checkin",
+          isOverWeight: "1",
         },
         {
-          Id: "",
-          passengerId: "",
-          weight: "",
-          luggageType: "",
-          isOverWeight: "",
+          Id: "2",
+          passengerId: "9510095080080",
+          weight: "7",
+          luggageType: "Carry On",
+          isOverWeight: "0",
         },
         {
-          Id: "",
-          passengerId: "",
-          weight: "",
-          luggageType: "",
-          isOverWeight: "",
+          Id: "3",
+          passengerId: "0800805900159",
+          weight: "19",
+          luggageType: "Weapons",
+          isOverWeight: "0",
         },
       ];
     },

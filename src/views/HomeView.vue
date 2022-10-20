@@ -2,10 +2,11 @@
   <div class="about pa-6">
     <v-card class="about pa-6">
       <h2>My Booking</h2>
-      <div v-if="!found">
+      <div>
         <v-form ref="form">
+          <!--Text Fields-->
           <v-text-field
-            v-model="ticket.ticketId"
+            v-model="ticketId"
             label="Ticket Number"
             hide-details="auto"
             :rules="[rules.required, rules.min]"
@@ -13,7 +14,7 @@
           ></v-text-field>
 
           <v-text-field
-            v-model="ticket.passengerId"
+            v-model="passengerId"
             label="ID Number"
             hide-details="auto"
             :rules="[rules.required, rules.id]"
@@ -21,20 +22,18 @@
           ></v-text-field>
           <v-spacer class="pa-2"></v-spacer>
         </v-form>
+        <!--button to check if the ticket exists and pass data to the other page-->
         <v-btn class="" outlined color="indigo" @click="findTicket"
           >Check-in</v-btn
         >
-      </div>
-
-      <div v-else>
-        <v-textarea>{{ ticket }}</v-textarea>
       </div>
     </v-card>
   </div>
 </template>
 
 <script>
-import TicketDataService from "../services/TicketDataService";
+//import TicketDataService from "../services/TicketDataService";
+//import {mapState, mapMutations} from 'vuex'
 export default {
   name: "Home",
   data() {
@@ -45,29 +44,30 @@ export default {
         id: (value) =>
           (value && value.length == 13) || "13 Characters Required",
       },
-      ticket: {
-        ticketId: "",
-        passengerId: "",
-      },
-      found: false,
+      
+      
+        ticketId: '',
+        passengerId: '',
+      
+      
     };
   },
-  methods: {
-    findTicket() {
-      var data = {
-        ticketId: this.ticket.ticketId,
-        passengerId: this.ticket.passengerId,
-      };
-      console.log(data),
-        TicketDataService.create(data)
-          .then((response) => {
-            this.ticket.ticketId = response.data.ticketId;
-            console.log(response.data);
-            this.found = true;
-          })
-          .catch((e) => {
-            console.log(e);
-          });
+   methods: {
+     findTicket() {
+       var data = {
+         ticketId: this.ticketId,
+         passengerId: this.passengerId,
+       };
+         console.log(data)
+  //       TicketDataService.create(data)
+  //         .then((response) => {
+  //           this.ticket.ticketId = response.data.ticketId;
+  //           console.log(response.data);
+  //           this.found = true;
+  //         })
+  //         .catch((e) => {
+  //           console.log(e);
+  //         });
     },
   },
 };

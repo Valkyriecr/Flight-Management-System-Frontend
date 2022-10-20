@@ -6,19 +6,25 @@
         <v-form>
           <h3>Passenger Details</h3>
           <v-text-field
-            v-model="checkin.name"
+            v-model="firstName"
             label="First Name"
             hide-details="auto"
             :rules="[rules.required, rules.min]"
           ></v-text-field>
           <v-text-field
-            v-model="checkin.LastName"
+            v-model="lastName"
             label="Last Name"
             hide-details="auto"
             :rules="[rules.required, rules.min]"
           ></v-text-field>
           <v-text-field
-            v-model="checkin.passengerId"
+            v-model="email"
+            label="Email"
+            hide-details="auto"
+            :rules="[rules.required, rules.min]"
+          ></v-text-field>
+          <v-text-field
+            v-model="passengerId"
             label="ID Number"
             hide-details="auto"
             :rules="[rules.required, rules.id]"
@@ -26,7 +32,7 @@
             filled
           ></v-text-field>
           <v-text-field
-            v-model="checkin.ticketId"
+            v-model="ticketId"
             label="Ticket ID"
             hide-details="auto"
             :rules="[rules.required, rules.min]"
@@ -34,7 +40,7 @@
           ></v-text-field>
 
           <v-text-field
-            v-model="checkin.flightId"
+            v-model="flightId"
             label="Flight ID"
             hide-details="auto"
             :rules="[rules.required, rules.min]"
@@ -50,7 +56,7 @@
           <v-spacer class="pa-2"></v-spacer>
           <v-autocomplete
             v-model="selectLuggage"
-            :items="luggageType"
+            :items="luggageTypeArray"
             label="Luggage"
             hide-selected
             clearable
@@ -59,16 +65,16 @@
             :rules="[rules.required]"
           ></v-autocomplete>
           <v-text-field
+            v-model="weight"
             class="pb-6"
             label="Luggage Weight"
             hide-details="auto"
-            type="number"
             :rules="[rules.required]"
           >
           </v-text-field>
         </v-form>
       </div>
-      <v-btn class="" outlined color="indigo" to="/flight-checker"
+      <v-btn class="" outlined color="indigo" @click="checkedin"
         >Check-in</v-btn
       >
     </v-card>
@@ -88,7 +94,7 @@ export default {
       selectArrival: ["Destination Location"],
       selectLuggage: ["Select Luggage"],
       items: ["FA-262", "FA-202", "FA-200", "FA-203"],
-      luggageType: [
+      luggageTypeArray: [
         "Carry-on",
         "Hand Luggage",
         "Checked-In",
@@ -98,19 +104,32 @@ export default {
         "None",
       ],
 
-      checkin: {
-        ticketId: null,
-        FirstName: "",
-        LastName: "",
-        IdNumber: "",
-        FlightId: "",
-      },
-      luggage: {
-        weight: null,
-        luggageType: "",
-        passenger: "",
-      },
+      ticketId: "",
+      firstName: "",
+      lastName: "",
+      passengerId: "",
+      flightId: "",
+      luggageType: "",
+      weight: 0,
+      email: "",
     };
+  },
+  methods: {
+    checkedin() {
+      var data = {
+        ticketId: this.ticketId,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        passengerId: this.passengerId,
+        flightId: this.flightId,
+        weight: this.weight,
+        luggageType: this.luggageType,
+        passengerId: this.passengerId,
+        email: this.email,
+        passengerId: this.passengerId,
+      };
+      console.log(data);
+    },
   },
 };
 </script>

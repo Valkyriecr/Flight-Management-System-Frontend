@@ -2,7 +2,7 @@
   <v-data-table :headers="headers" :items="airports" sort-by="airportId" class="elevation-1">
     <template v-slot:top>
       <v-toolbar flat>
-        <v-toolbar-title>Cabin airports</v-toolbar-title>
+        <v-toolbar-title>Airports</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="500px">
@@ -81,12 +81,12 @@ export default {
     editedIndex: -1,
     editedItem: {
       airportId: "",
-      CityId: "",
+      cityId: "",
       airportName: "",
     },
     defaultItem: {
       airportId: "",
-      CityId: "",
+      cityId: "",
       airportName: "",
     },
   }),
@@ -115,17 +115,17 @@ export default {
       this.airports = [
         {
           airportId: "1",
-          CityId: "CPT",
+          cityId: "CPT",
           airportName: "Cape Town International",
         },
         {
           airportId: "2",
-          CityId: "Bloem",
+          cityId: "Bloem",
           airportName: "Bloemfontein Airport",
         },
         {
           airportId: "ORT",
-          CityId: "JHB",
+          cityId: "JHB",
           airportName: "OR Tambo",
         },
       ];

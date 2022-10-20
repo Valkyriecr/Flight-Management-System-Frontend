@@ -38,7 +38,6 @@
             :rules="[rules.required, rules.min]"
             filled
           ></v-text-field>
-
           <v-text-field
             v-model="flightId"
             label="Flight ID"
@@ -57,6 +56,7 @@
           <v-autocomplete
             v-model="selectLuggage"
             :items="luggageTypeArray"
+            item-value="value"
             label="Luggage"
             hide-selected
             clearable
@@ -123,13 +123,12 @@ export default {
         passengerId: this.passengerId,
         flightId: this.flightId,
         weight: this.weight,
-        luggageType: this.luggageType,
-        passengerId: this.passengerId,
+        luggageType: this.selectLuggage,
         email: this.email,
-        passengerId: this.passengerId,
       };
       console.log(data);
     },
   },
+  computed: {},
 };
 </script>

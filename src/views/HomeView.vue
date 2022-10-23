@@ -23,8 +23,8 @@
           <v-spacer class="pa-2"></v-spacer>
         </v-form>
         <!--button to check if the ticket exists and pass data to the other page-->
-        <v-btn class="" outlined color="indigo" @click="findTicket"
-          >Check-in</v-btn
+        <v-btn class="" outlined color="primary" @click="findTicket"
+          >To Check in</v-btn
         >
       </div>
     </v-card>

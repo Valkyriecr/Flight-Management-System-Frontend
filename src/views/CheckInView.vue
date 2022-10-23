@@ -74,7 +74,7 @@
           </v-text-field>
         </v-form>
       </div>
-      <v-btn class="" outlined color="indigo" @click="checkedin"
+      <v-btn class="" outlined color="primary" @click="checkedin"
         >Check-in</v-btn
       >
     </v-card>

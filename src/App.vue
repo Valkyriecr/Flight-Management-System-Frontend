@@ -40,8 +40,8 @@
       <v-btn icon>
         <v-icon>mdi-heart</v-icon>
       </v-btn>
-      <v-btn icon>
-        <v-icon>mdi-dots-vertical</v-icon>
+      <v-btn icon to="/login">
+        <v-icon >mdi-dots-vertical</v-icon>
       </v-btn>
     </v-app-bar>
     <v-main>

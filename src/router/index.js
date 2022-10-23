@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import AdminView from '../views/AdminView.vue'
 import CheckInView from '../views/CheckInView.vue'
 import FlightCheckerView from '../views/FlightCheckerView.vue'
+import LoginView from '../views/LoginView.vue'
 
 Vue.use(VueRouter)
 
@@ -29,6 +30,11 @@ const routes = [
     component: CheckInView
   },
   {
+    path: '/login',
+    name: 'login',
+    component: LoginView
+  },
+  {
     path: '/about',
     name: 'about',
     // route level code-splitting
@@ -43,3 +49,5 @@ const router = new VueRouter({
 })
 
 export default router
+
+//router.replace('/login')

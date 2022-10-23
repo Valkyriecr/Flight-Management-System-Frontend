@@ -4,44 +4,44 @@
       <div>
         <h2>Show Table</h2>
         <div flex>
-          <v-spacer class="pa-2"></v-spacer>
-          <v-btn @click="showAirline = !showAirline" outlined color="indigo" flex
+            <v-spacer class="pa-2"></v-spacer>
+          <v-btn label="Airline Table" @click="showAirline = !showAirline" :outlined="!showAirline" color="primary" flex
             >Airline Table</v-btn
           >
-          <v-btn @click="showAirport = !showAirport" outlined color="indigo" flex
+            <v-btn label="Airport Table" @click="showAirport = !showAirport" :outlined="!showAirport" color="primary" flex
             >Airport Table</v-btn
-          >
-          <v-btn @click="showCheckin = !showCheckin" outlined color="indigo" flex
+          > 
+          <v-btn label="Checkin Table" @click="showCheckin = !showCheckin" :outlined="!showCheckin" color="primary" flex
             >Checkin Table</v-btn
           >
-          <v-btn @click="showCountry = !showCountry" outlined color="indigo" flex
+          <v-btn label="Country Table" @click="showCountry = !showCountry" :outlined="!showCountry" color="primary" flex
             >Country Table</v-btn
           >
-          <v-btn @click="showCity = !showCity" outlined color="indigo" flex
+          <v-btn label="City Table" @click="showCity = !showCity" :outlined="!showCity" color="primary" flex
             >City Table</v-btn
           >
-          <v-btn @click="showCrew = !showCrew" outlined color="indigo" flex
+          <v-btn label="Crews Table" @click="showCrew = !showCrew" :outlined="!showCrew" color="primary" flex
             >Crews Table</v-btn
           >
-          <v-btn @click="showFlight = !showFlight" outlined color="indigo" flex
+          <v-btn label="Flights Table" @click="showFlight = !showFlight" :outlined="!showFlight" color="primary" flex
             >Flights Table</v-btn
           >
-          <v-btn @click="showFlightRoute = !showFlightRoute" outlined color="indigo" flex
+          <v-btn label="FlightRoute Table" @click="showFlightRoute = !showFlightRoute" :outlined="!showFlightRoute" color="primary" flex
             >FlightRoute Table</v-btn
           >
-          <v-btn @click="showLuggage = !showLuggage" outlined color="indigo" flex
+          <v-btn label="Luggage Table" @click="showLuggage = !showLuggage" :outlined="!showLuggage" color="primary" flex
             >Luggage Table</v-btn
           >
-          <v-btn @click="showPassenger = !showPassenger" outlined color="indigo" flex
+          <v-btn label="Passenger Table" @click="showPassenger = !showPassenger" :outlined="!showPassenger" color="primary" flex
             >Passenger Table</v-btn
           >
-          <v-btn @click="showPlane = !showPlane" outlined color="indigo" flex
+          <v-btn @click="showPlane = !showPlane" :outlined="!showPlane" color="primary" flex
             >Plane Table</v-btn
           >
-          <v-btn @click="showSeats = !showSeats" outlined color="indigo" flex
+          <v-btn label="Seats Table" @click="showSeats = !showSeats" :outlined="!showSeats" color="primary" flex
             >Seats Table</v-btn
           >
-          <v-btn @click="showTicket = !showTicket" outlined color="indigo" flex
+          <v-btn label="Ticket Table" @click="showTicket = !showTicket" :outlined="!showTicket" color="primary" flex
             >Ticket Table</v-btn
           >
         </div>

@@ -21,11 +21,10 @@
             required
           ></v-text-field>
           <v-spacer class="pa-2"></v-spacer>
-        </v-form>
-        <!--button to check if the ticket exists and pass data to the other page-->
+          <!--button to check if the ticket exists and pass data to the other page-->
         <v-btn class="" outlined color="primary" @click="findTicket"
-          >To Check in</v-btn
-        >
+          >To Check in</v-btn>
+        </v-form>
       </div>
     </v-card>
   </div>
@@ -33,7 +32,7 @@
 
 <script>
 //import TicketDataService from "../services/TicketDataService";
-//import {mapState, mapMutations} from 'vuex'
+import {mapActions} from 'vuex'
 export default {
   name: "Home",
   data() {
@@ -46,19 +45,31 @@ export default {
       },
       
       
-        ticketId: '',
-        passengerId: '',
+        ticketId: 'TK-001',
+        passengerId: '9510095080080',
       
       
     };
   },
    methods: {
+    ...mapActions(['validateTicket']),
+
      findTicket() {
-       var data = {
+      const success = this.$refs.form.validate();
+      
+      if(success){
+
+        var data = {
          ticketId: this.ticketId,
          passengerId: this.passengerId,
        };
-         console.log(data)
+
+       this.validateTicket(data)
+
+
+         //console.table(data)
+      }
+      
   //       TicketDataService.create(data)
   //         .then((response) => {
   //           this.ticket.ticketId = response.data.ticketId;

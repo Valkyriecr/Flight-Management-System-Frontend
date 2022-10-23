@@ -1,7 +1,7 @@
 <template>
   <div class="about pa-6">
     <v-card class="about pa-6">
-      <h2>Check-in</h2>
+      <h2 >Check-in for {{ getTicketId }}</h2>
       <div>
         <v-form>
           <h3>Passenger Details</h3>
@@ -32,10 +32,11 @@
             filled
           ></v-text-field>
           <v-text-field
-            v-model="ticketId"
+            v-model="getTicketId"
             label="Ticket ID"
             hide-details="auto"
             :rules="[rules.required, rules.min]"
+            readonly
             filled
           ></v-text-field>
           <v-text-field
@@ -81,6 +82,7 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 export default {
   data: () => ({}),
   data() {
@@ -129,6 +131,13 @@ export default {
       console.log(data);
     },
   },
-  computed: {},
+  computed: {
+    ...mapGetters(['getTicketId'])
+  },
+  mounted(){
+    if(this.getTicketId){
+      this.ticketId=this.getTicketId
+    }
+  }
 };
 </script>

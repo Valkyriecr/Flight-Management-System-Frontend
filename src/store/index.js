@@ -1,3 +1,6 @@
+import router from '@/router'
+import TicketDataService from '@/services/TicketDataService'
+import axios from 'axios'
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -5,32 +8,50 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    ticketId: 'ticketId',
-    passengerId: 'passengerId',
+
+    firstName: '',
+    lastName: '',
+    luggageType: '',
+    weight: 0,
+    email: '',
+    ticketId: '',
+    passengerId: '',
     flightId: '',
-    ticket: {
-      ticketId: '',
-      passengerId: '',
-      flightId: '',
-    }
+
 
   },
   getters: {
+    getTicketId(state) {
+      return state.ticketId
+    }
   },
   mutations: {
-    AddTicketId(state, ticId) {
-      state.ticketId = ticId
-      console.log('Added Ticket: ',state.ticketId)
-    }, 
-    findTicket(state, tick) {
-      state.ticket = tick
+    saveTicketData(state, ticket) {
+      state.ticketId = ticket.ticketId
+      state.flightId = ticket.flightId
+      state.passengerId = ticket.passengerId
+      console.log('Added Ticket: ', state.ticketId)
     },
-    AddPassengerId(state, passId) {
+
+    addPassengerId(state, passId) {
       state.passengerId = passId
-      console.log('Added Passenger: ',state.passengerId)
+      console.log('Added Passenger: ', state.passengerId)
     }
   },
   actions: {
+    async validateTicket({ commit }, payload) {
+      const response = await TicketDataService.findByTicketId(payload.ticketId)
+      const ticket = response.data
+      //console.table(ticket)
+      if (ticket && ticket.passengerId === payload.passengerId) {
+        console.table(ticket)
+        commit('saveTicketData', ticket)
+        router.push({ path: '/check-in' })
+      }else{
+        alert('Ticket and Id do not match')
+      }
+
+    },
     addTicketId({ commit }, ticId) {
       commit('findTicketId', ticId)
       console.log(ticId)
@@ -42,8 +63,10 @@ export default new Vuex.Store({
     AddPassengerId({ commit }, passId) {
       commit('findPassengerId', passId)
       console.log(passId)
-    }
-
+    },
+    findTicket(state, tick) {
+      state.ticket = tick
+    },
   },
   modules: {
   }

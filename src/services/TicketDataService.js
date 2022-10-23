@@ -2,31 +2,31 @@ import http from "../http-common";
 
 class TicketDataService {
     getAll() {
-        return http.get("/tickets");
+        return http.get("/ticket");
     }
 
     get(id) {
-        return http.get(`/tickets/${id}`);
+        return http.get(`/ticket/find/${id}`);
     }
 
     create(data) {
-        return http.post("/tickets", data);
+        return http.post("/ticket", data);
     }
 
     update(id, data) {
-        return http.put(`/tickets/${id}`, data);
+        return http.put(`/ticket/${id}`, data);
     }
 
     delete(id) {
-        return http.delete(`/tickets/${id}`);
+        return http.delete(`/ticket/${id}`);
     }
 
     deleteAll() {
-        return http.delete(`/tickets`);
+        return http.delete(`/ticket`);
     }
 
-    findByPassengerId(passengerId) {
-        return http.get(`/tickets?passengerId=${passengerId}`);
+    findByTicketId(ticketId) {
+        return http.get(`/ticket/findByTicketId/${ticketId}`);
     }
 
 }

@@ -3,7 +3,7 @@
     <v-card class="about pa-6">
       <h2>My Booking</h2>
       <div>
-        <v-form ref="form">
+        <v-form ref="bookingForm">
           <!--Text Fields-->
           <v-text-field
             v-model="ticketId"
@@ -22,8 +22,9 @@
           ></v-text-field>
           <v-spacer class="pa-2"></v-spacer>
           <!--button to check if the ticket exists and pass data to the other page-->
-        <v-btn class="" outlined color="primary" @click="findTicket"
-          >To Check in</v-btn>
+          <v-btn class="" outlined color="primary" @click="findTicket"
+            >To Check in</v-btn
+          >
         </v-form>
       </div>
     </v-card>
@@ -32,7 +33,7 @@
 
 <script>
 //import TicketDataService from "../services/TicketDataService";
-import {mapActions} from 'vuex'
+import { mapActions } from "vuex";
 export default {
   name: "Home",
   data() {
@@ -43,42 +44,37 @@ export default {
         id: (value) =>
           (value && value.length == 13) || "13 Characters Required",
       },
-      
-      
-        ticketId: 'TK-001',
-        passengerId: '9510095080080',
-      
-      
+
+      ticketId: "TK-001",
+      passengerId: "9510095080080",
     };
   },
-   methods: {
-    ...mapActions(['validateTicket']),
+  methods: {
+    ...mapActions(["validateTicket"]),
 
-     findTicket() {
-      const success = this.$refs.form.validate();
-      
-      if(success){
+    findTicket() {
+      const success = this.$refs.bookingForm.validate();
 
+      if (success) {
         var data = {
-         ticketId: this.ticketId,
-         passengerId: this.passengerId,
-       };
+          ticketId: this.ticketId,
+          passengerId: this.passengerId,
+        };
 
-       this.validateTicket(data)
+        this.validateTicket(data);
 
-
-         //console.table(data)
+        //console.table(data)
       }
-      
-  //       TicketDataService.create(data)
-  //         .then((response) => {
-  //           this.ticket.ticketId = response.data.ticketId;
-  //           console.log(response.data);
-  //           this.found = true;
-  //         })
-  //         .catch((e) => {
-  //           console.log(e);
-  //         });
+
+      //       TicketDataService.create(data)
+      //         .then((response) => {
+      //           this.ticket.ticketId = response.data.ticketId;
+      //           console.log(response.data);
+      //           this.found = true;
+      //         })
+      //         .catch((e) => {
+      //           console.log(e);
+      //         });
     },
   },
 };

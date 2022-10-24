@@ -17,15 +17,22 @@ export default new Vuex.Store({
     ticketId: '',
     passengerId: '',
     flightId: '',
-
+    ticket:''
 
   },
   getters: {
+    getTicket(state){
+      return state.ticket
+    },
     getTicketId(state) {
       return state.ticketId
     }
   },
   mutations: {
+    saveTicket(state, ticket){
+      state.ticket =ticket
+      console.table(ticket)
+    },
     saveTicketData(state, ticket) {
       state.ticketId = ticket.ticketId
       state.flightId = ticket.flightId
@@ -46,6 +53,7 @@ export default new Vuex.Store({
       if (ticket && ticket.passengerId === payload.passengerId) {
         console.table(ticket)
         commit('saveTicketData', ticket)
+        commit('saveTicket', ticket)
         router.push({ path: '/check-in' })
       }else{
         alert('Ticket and Id do not match')

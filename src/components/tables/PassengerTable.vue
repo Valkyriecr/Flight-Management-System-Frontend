@@ -2,7 +2,7 @@
   <v-data-table
     :headers="headers"
     :items="passengers"
-    sort-by="Id"
+    sort-by="id"
     class="elevation-1"
   >
     <template v-slot:top>
@@ -22,11 +22,12 @@
             </v-card-title>
 
             <v-card-text>
+              <v-form ref="data">
               <v-container>
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
-                      v-model="editedItem.Id"
+                      v-model="editedItem.passengerId"
                       label="ID"
                     ></v-text-field>
                   </v-col>
@@ -51,6 +52,7 @@
                   <v-col cols="12" sm="6" md="4"> </v-col>
                 </v-row>
               </v-container>
+            </v-form>
             </v-card-text>
 
             <v-card-actions>
@@ -90,6 +92,7 @@
 </template>
 
 <script>
+import PassengerDataService from '@/services/PassengerDataService';
 export default {
   data: () => ({
     dialog: false,
@@ -98,8 +101,9 @@ export default {
       {
         text: "ID",
         align: "start",
-        value: "Id",
+        value: "id",
       },
+      { text: "Passenger ID", value: "passengerId" },
       { text: "First Name", value: "firstName" },
       { text: "Last Name", value: "lastName" },
       { text: "Email", value: "email" },
@@ -109,12 +113,14 @@ export default {
     editedIndex: -1,
     editedItem: {
       Id: "",
+      passengerId:"",
       firstName: "",
       lastName: "",
       email: "",
     },
     defaultItem: {
       Id: "",
+      passengerId:"",
       firstName: "",
       lastName: "",
       email: "",
@@ -142,26 +148,13 @@ export default {
 
   methods: {
     initialize() {
-      this.passengers = [
-        {
-          Id: "9510095080080",
-          firstName: "Erin",
-          lastName: "Rowan",
-          email: "erowan95@gmail.com",
-        },
-        {
-          Id: "9510095080081",
-          firstName: "Erin Chad",
-          lastName: "Rowan",
-          email: "erowangaming@gmail.com",
-        },
-        {
-          Id: "9610095080080",
-          firstName: "Erin Chadly",
-          lastName: "Rowan",
-          email: "erowan@gmail.com",
-        },
-      ];
+      this.passengers = [];
+      this.refreshTable()    
+    },
+    async refreshTable(){
+      const allPassengerResponse = await PassengerDataService.getAll();
+      this.passengers=allPassengerResponse.data;
+      console.table(this.passengers)
     },
 
     editItem(item) {
@@ -171,13 +164,15 @@ export default {
     },
 
     deleteItem(item) {
-      this.editedIndex = this.passengers.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+     this.itemForDelete=item
       this.dialogDelete = true;
     },
 
-    deleteItemConfirm() {
-      this.passengers.splice(this.editedIndex, 1);
+    async deleteItemConfirm() {
+      if(this.itemForDelete){
+        const response= await PassengerDataService.delete(this.itemForDelete.id)
+        this.refreshTable()
+      }
       this.closeDelete();
     },
 
@@ -191,19 +186,16 @@ export default {
 
     closeDelete() {
       this.dialogDelete = false;
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      });
     },
 
-    save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.passengers[this.editedIndex], this.editedItem);
-      } else {
-        this.passengers.push(this.editedItem);
+    async save() {
+    const success = this.$refs.data.validate();
+      
+      if(success){
+       const response= await PassengerDataService.update(this.editedItem)
+       this.refreshTable()
+       this.close();
       }
-      this.close();
     },
   },
 };

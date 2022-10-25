@@ -14,11 +14,11 @@
           <v-btn label="Checkin Table" @click="showCheckin = !showCheckin" :outlined="!showCheckin" color="primary" flex
             >Checkin Table</v-btn
           >
-          <v-btn label="Country Table" @click="showCountry = !showCountry" :outlined="!showCountry" color="primary" flex
-            >Country Table</v-btn
-          >
           <v-btn label="City Table" @click="showCity = !showCity" :outlined="!showCity" color="primary" flex
             >City Table</v-btn
+          >
+          <v-btn label="Country Table" @click="showCountry = !showCountry" :outlined="!showCountry" color="primary" flex
+            >Country Table</v-btn
           >
           <v-btn label="Crews Table" @click="showCrew = !showCrew" :outlined="!showCrew" color="primary" flex
             >Crews Table</v-btn
@@ -59,6 +59,10 @@
           <v-spacer class="pa-6"></v-spacer>
           <CheckinTable></CheckinTable>
         </div>
+        <div v-show="showCity">
+          <v-spacer class="pa-6"></v-spacer>
+          <CityTable></CityTable>
+        </div>
         <div v-show="showCrew">
           <v-spacer class="pa-6"></v-spacer>
           <CabinCrewTable></CabinCrewTable>
@@ -74,13 +78,22 @@
           <v-spacer class="pa-6"></v-spacer>
           <PassengerTable></PassengerTable>
         </div>
-        
+        <div v-show="showPlane">
+          <v-spacer class="pa-6"></v-spacer>
+          <PlaneTable></PlaneTable>
+        </div>
+        <div v-show="showTicket">
+          <v-spacer class="pa-6"></v-spacer>
+          <TicketTable></TicketTable>
+        </div>
       </div>
     </v-card>
   </div>
 </template>
 
 <script>
+import PlaneTable from "@/components/tables/PlaneTable.vue";
+import CityTable from "@/components/tables/CityTable.vue";
 import FlightTable from "@/components/tables/FlightTable.vue";
 import PassengerTable from "@/components/tables/PassengerTable.vue";
 import CabinCrewTable from "@/components/tables/CabinCrewTable.vue";
@@ -88,6 +101,7 @@ import CheckinTable from "@/components/tables/CheckinTable.vue";
 import LuggageTable from "@/components/tables/LuggageTable.vue";
 import AirlineTable from "@/components/tables/AirlineTable.vue";
 import AirportTable from "../components/tables/AirportTable.vue";
+import TicketTable from "@/components/tables/TicketTable.vue";
 export default {
   components: {
     AirlineTable,
@@ -97,6 +111,9 @@ export default {
     LuggageTable,
     PassengerTable,
     CheckinTable,
+    TicketTable,
+    CityTable,
+    PlaneTable,
   },
   data: function () {
     return {

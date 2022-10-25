@@ -13,8 +13,8 @@ class CheckInDataService {
         return http.post("/checkin/add", data);
     }
 
-    update(id, data) {
-        return http.put(`/checkin/update/${id}`, data);
+    update(data) {
+        return http.put(`/checkin/update`, data);
     }
 
     delete(id) {

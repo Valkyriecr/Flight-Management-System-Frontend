@@ -2,7 +2,7 @@
   <v-data-table
     :headers="headers"
     :items="checkins"
-    sort-by="ticketId"
+    sort-by="id"
     class="elevation-1"
   >
     <template v-slot:top>
@@ -22,6 +22,7 @@
             </v-card-title>
 
             <v-card-text>
+              <v-form ref="data">
               <v-container>
                 <v-row>                
                   <v-col cols="12" sm="6" md="4">
@@ -44,6 +45,7 @@
                   </v-col>
                 </v-row>
               </v-container>
+            </v-form>
             </v-card-text>
 
             <v-card-actions>
@@ -103,11 +105,13 @@ export default {
     checkins: [],
     editedIndex: -1,
     editedItem: {
+      id:"",
       ticketId: "",
       luggageId: "",
       reservedSeat: "",
     },
     defaultItem: {
+      id:"",
       ticketId: "",
       luggageId: "",
       reservedSeat: "",
@@ -134,10 +138,14 @@ export default {
   },
 
   methods: {
-    async initialize() {
+    initialize() {
       this.checkins = [ ];
-      const allcheckinResponse = await CheckInDataService.getAll();
-      this.checkins=allcheckinResponse.data;
+    this.refreshTable()
+    },
+    async refreshTable(){
+      const allCheckInResponse = await CheckInDataService.getAll();
+      this.checkins=allCheckInResponse.data;
+      console.table(this.checkins)
     },
 
     editItem(item) {
@@ -147,13 +155,15 @@ export default {
     },
 
     deleteItem(item) {
-      this.editedIndex = this.checkins.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+      this.itemForDelete=item
       this.dialogDelete = true;
     },
 
-    deleteItemConfirm() {
-      this.checkins.splice(this.editedIndex, 1);
+    async deleteItemConfirm() {
+      if(this.itemForDelete){
+        const response= await CheckInDataService.delete(this.itemForDelete.id)
+        this.refreshTable()
+      }
       this.closeDelete();
     },
 
@@ -173,13 +183,14 @@ export default {
       });
     },
 
-    save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.checkins[this.editedIndex], this.editedItem);
-      } else {
-        this.checkins.push(this.editedItem);
+    async save() {
+    const success = this.$refs.data.validate();
+      
+      if(success){
+       const response= await CheckInDataService.update(this.editedItem)
+       this.refreshTable()
+       this.close();
       }
-      this.close();
     },
   },
 };

@@ -32,7 +32,6 @@
 </template>
 
 <script>
-//import TicketDataService from "../services/TicketDataService";
 import { mapActions } from "vuex";
 export default {
   name: "Home",
@@ -61,20 +60,8 @@ export default {
           passengerId: this.passengerId,
         };
 
-        this.validateTicket(data);
-
-        //console.table(data)
+        this.validateTicket(data);       
       }
-
-      //       TicketDataService.create(data)
-      //         .then((response) => {
-      //           this.ticket.ticketId = response.data.ticketId;
-      //           console.log(response.data);
-      //           this.found = true;
-      //         })
-      //         .catch((e) => {
-      //           console.log(e);
-      //         });
     },
   },
 };

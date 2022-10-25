@@ -1,5 +1,10 @@
 <template>
-  <v-data-table :headers="headers" :items="airports" sort-by="airportId" class="elevation-1">
+  <v-data-table
+    :headers="headers"
+    :items="airports"
+    sort-by="airportId"
+    class="elevation-1"
+  >
     <template v-slot:top>
       <v-toolbar flat>
         <v-toolbar-title>Airports</v-toolbar-title>
@@ -17,19 +22,33 @@
             </v-card-title>
 
             <v-card-text>
+              <v-form ref="data">
               <v-container>
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.airportId" label="Airport ID"></v-text-field>
+                    <v-text-field
+                      v-model="editedItem.airportId"
+                      label="Airport ID"
+                      :rules="[ (value) => !!value || 'Required.']"
+                    ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.cityId" label="City ID"></v-text-field>
+                    <v-text-field
+                      v-model="editedItem.airportName"
+                      label="Airport Name"
+                      :rules="[ (value) => !!value || 'Required.']"
+                    ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.airportName" label="Airport Name"></v-text-field>
+                    <v-text-field
+                      v-model="editedItem.cityId"
+                      label="City ID"
+                      :rules="[ (value) => !!value || 'Required.']"
+                    ></v-text-field>
                   </v-col>
                 </v-row>
               </v-container>
+            </v-form>
             </v-card-text>
 
             <v-card-actions>
@@ -41,11 +60,17 @@
         </v-dialog>
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
-            <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
+            <v-card-title class="text-h5"
+              >Are you sure you want to delete this item?</v-card-title
+            >
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-              <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+              <v-btn color="blue darken-1" text @click="closeDelete"
+                >Cancel</v-btn
+              >
+              <v-btn color="blue darken-1" text @click="deleteItemConfirm"
+                >OK</v-btn
+              >
               <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>
@@ -63,31 +88,35 @@
 </template>
 
 <script>
+import AirportDataService from '@/services/AirportDataService';
+
 export default {
   data: () => ({
     dialog: false,
     dialogDelete: false,
     headers: [
       {
-        text: "Airport ID",
+        text: "ID",
         align: "start",
-        value: "airportId",
+        value: "id",
       },
-      { text: "City ID", value: "cityId" },
+      { text: "Airport ID", value: "airportId" },
       { text: "airport Name", value: "airportName" },
+      { text: "City ID", value: "cityId" },
       { text: "Actions", value: "actions", sortable: false },
     ],
     airports: [],
     editedIndex: -1,
     editedItem: {
       airportId: "",
-      cityId: "",
       airportName: "",
+      cityId: "",
+      
     },
     defaultItem: {
       airportId: "",
+      airportName: "", 
       cityId: "",
-      airportName: "",
     },
   }),
 
@@ -112,23 +141,13 @@ export default {
 
   methods: {
     initialize() {
-      this.airports = [
-        {
-          airportId: "1",
-          cityId: "CPT",
-          airportName: "Cape Town International",
-        },
-        {
-          airportId: "2",
-          cityId: "Bloem",
-          airportName: "Bloemfontein Airport",
-        },
-        {
-          airportId: "ORT",
-          cityId: "JHB",
-          airportName: "OR Tambo",
-        },
-      ];
+      this.airports = [];
+      this.refreshTable()
+    },
+    async refreshTable(){
+      const allAirportResponse = await AirportDataService.getAll();
+      this.airports=allAirportResponse.data;
+      console.table(this.airports)
     },
 
     editItem(item) {
@@ -138,13 +157,15 @@ export default {
     },
 
     deleteItem(item) {
-      this.editedIndex = this.airports.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+      this.itemForDelete=item
       this.dialogDelete = true;
     },
 
-    deleteItemConfirm() {
-      this.airports.splice(this.editedIndex, 1);
+    async deleteItemConfirm() {
+      if(this.itemForDelete){
+        const response= await AirportDataService.delete(this.itemForDelete.id)
+        this.refreshTable()
+      }
       this.closeDelete();
     },
 
@@ -158,19 +179,16 @@ export default {
 
     closeDelete() {
       this.dialogDelete = false;
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      });
     },
 
-    save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.airports[this.editedIndex], this.editedItem);
-      } else {
-        this.airports.push(this.editedItem);
-      }
+    async save() {
+      const success = this.$refs.data.validate();
+      
+     if(success){
+      const response= await AirportDataService.update(this.editedItem)
+      this.refreshTable()
       this.close();
+     }
     },
   },
 };

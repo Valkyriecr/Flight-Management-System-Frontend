@@ -1,4 +1,7 @@
 import router from '@/router'
+import LuggageDataService from '@/services/LuggageDataService'
+import CheckInDataService from '@/services/CheckInDataService'
+import PassengerDataService from '@/services/PassengerDataService'
 import TicketDataService from '@/services/TicketDataService'
 import axios from 'axios'
 import Vue from 'vue'
@@ -17,7 +20,10 @@ export default new Vuex.Store({
     ticketId: '',
     passengerId: '',
     flightId: '',
-    ticket:''
+    ticket:'',
+    checkin:'',
+    passenger:'',
+    luggage:''
 
   },
   getters: {
@@ -30,19 +36,28 @@ export default new Vuex.Store({
   },
   mutations: {
     saveTicket(state, ticket){
-      state.ticket =ticket
-      console.table(ticket)
+      state.ticket=ticket
+    },
+    saveCheckin(state, checkin){
+      state.checkin=checkin
+    },
+    savePassenger(state, passenger){
+      state.passenger=passenger
+    },
+    saveCheckin(state, checkin){
+      state.checkin=checkin
+    },
+    saveLuggage(state, luggage){
+      state.luggage =luggage
     },
     saveTicketData(state, ticket) {
       state.ticketId = ticket.ticketId
       state.flightId = ticket.flightId
       state.passengerId = ticket.passengerId
-      console.log('Added Ticket: ', state.ticketId)
     },
 
     addPassengerId(state, passId) {
       state.passengerId = passId
-      console.log('Added Passenger: ', state.passengerId)
     }
   },
   actions: {
@@ -51,7 +66,6 @@ export default new Vuex.Store({
       const ticket = response.data
       //console.table(ticket)
       if (ticket && ticket.passengerId === payload.passengerId) {
-        console.table(ticket)
         commit('saveTicketData', ticket)
         commit('saveTicket', ticket)
         router.push({ path: '/check-in' })
@@ -60,17 +74,54 @@ export default new Vuex.Store({
       }
 
     },
+    async validateCheckin({ commit }, payload) {
+
+        var passenger={
+        passengerId:payload.passengerId,
+        firstName:payload.firstName,
+        lastName:payload.lastName,
+        email:payload.email,
+      }
+     var checkin={
+        ticketId:payload.ticketId,
+        reservedSeat:1,
+        luggageId:(payload.flightId+"-"+payload.passengerId)
+      }
+
+      if(payload.luggageType!="None"){
+        var luggage={
+          luggageId:(payload.flightId+"-"+payload.passengerId),
+          flightId:payload.flightId,
+          passengerId:payload.passengerId,
+          luggageType:payload.luggageType,
+          weight:payload.weight,
+      }
+      
+      }else{
+       var luggage={
+          luggageId:(payload.flightId+"-"+payload.passengerId),
+          flightId:payload.flightId,
+          passengerId:payload.passengerId,
+          luggageType:payload.luggageType,
+          weight:0
+      }
+      }
+      commit('saveLuggage', luggage)
+      const luggageResponse= await LuggageDataService.create(luggage);
+      commit('savePassenger', passenger)
+      const passengerResponse= await PassengerDataService.create(passenger);
+      commit('saveCheckin', checkin)
+      const checkinResponse= await CheckInDataService.create(checkin);
+
+    },
     addTicketId({ commit }, ticId) {
       commit('findTicketId', ticId)
-      console.log(ticId)
     },
     addTicket({ commit }, tic) {
       commit('findTicket', tic)
-      console.log(tic)
     },
     AddPassengerId({ commit }, passId) {
       commit('findPassengerId', passId)
-      console.log(passId)
     },
     findTicket(state, tick) {
       state.ticket = tick

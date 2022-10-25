@@ -114,7 +114,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions([""]),
+    ...mapActions(["validateCheckin"]),
     checkin() {
       const success = this.$refs.checkinForm.validate();
       if (this.luggageType != "") {
@@ -131,6 +131,7 @@ export default {
             email: this.email,
           };
           console.log(data);
+          this.validateCheckin(data)
         }
       } else {
         alert("Luggage Type not entered!");

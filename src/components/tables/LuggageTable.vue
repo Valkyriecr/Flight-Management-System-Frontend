@@ -2,7 +2,7 @@
   <v-data-table
     :headers="headers"
     :items="luggages"
-    sort-by="Id"
+    sort-by="id"
     class="elevation-1"
   >
     <template v-slot:top>
@@ -22,38 +22,47 @@
             </v-card-title>
 
             <v-card-text>
+              <v-form ref="data">
               <v-container>
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
-                      v-model="editedItem.Id"
-                      label="ID"
+                      v-model="editedItem.flightId"
+                      label="Flight ID"
+                      :rules="[ (value) => !!value || 'Required.']"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
                       v-model="editedItem.passengerId"
                       label="Passenger ID"
+                      :rules="[ (value) => !!value || 'Required.']"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field
+                      v-model="editedItem.luggageId"
+                      label="Luggage ID"
+                      :rules="[ (value) => !!value || 'Required.']"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
                       v-model="editedItem.weight"
                       label="Luggage Weight"
+                      :rules="[numberRule]"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
                       v-model="editedItem.luggageType"
                       label="Luggage Type"
+                      :rules="[ (value) => !!value || 'Required.']"
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="4"><v-text-field
-                      v-model="editedItem.isOverWeight"
-                      label="Luggage Overweight"
-                    ></v-text-field></v-col>
                 </v-row>
               </v-container>
+            </v-form>
             </v-card-text>
 
             <v-card-actions>
@@ -93,6 +102,7 @@
 </template>
 
 <script>
+import LuggageDataService from '@/services/LuggageDataService';
 export default {
   data: () => ({
     dialog: false,
@@ -101,31 +111,42 @@ export default {
       {
         text: "ID",
         align: "start",
-        value: "Id",
+        value: "id",
       },
+      { text: "Flight ID", value: "flightId" },
       { text: "Passenger ID", value: "passengerId" },
+      { text: "Luggage ID", value: "luggageId" },
       { text: "Luggage Weight", value: "weight" },
       { text: "Luggage Type", value: "luggageType" },
-      { text: "Luggage Overweight", value: "isOverWeight" },
+      { text: "Luggage Overweight", value: "overWeight" },
       { text: "Actions", value: "actions", sortable: false },
     ],
     luggages: [],
+    itemForDelete:{},
     editedIndex: -1,
     editedItem: {
-      Id: "",
+      id: "",
       passengerId: "",
+      luggageId:"",
       weight: "",
       luggageType: "",
-      isOverWeight: "",
+      overWeight: "",
     },
     defaultItem: {
-      Id: "",
+      id: "",
       passengerId: "",
+      luggageId:"",
       weight: "",
       luggageType: "",
-      isOverWeight: "",
+      overWeight: "",
+    },
+    
+    numberRule: v  => {
+      if (!isNaN(parseFloat(v)) && v >= 0 && v <= 999) return true;
+      return 'Required.';
     },
   }),
+    
 
   computed: {
     formTitle() {
@@ -147,32 +168,16 @@ export default {
   },
 
   methods: {
-    initialize() {
-      this.luggages = [
-        {
-          Id: "1",
-          passengerId: "9501095800080",
-          weight: "23",
-          luggageType: "Checkin",
-          isOverWeight: "1",
-        },
-        {
-          Id: "2",
-          passengerId: "9510095080080",
-          weight: "7",
-          luggageType: "Carry On",
-          isOverWeight: "0",
-        },
-        {
-          Id: "3",
-          passengerId: "0800805900159",
-          weight: "19",
-          luggageType: "Weapons",
-          isOverWeight: "0",
-        },
-      ];
+   async initialize() {
+      this.luggages = [];
+      this.refreshTable()
     },
-
+    async refreshTable(){
+      const allLuggageResponse = await LuggageDataService.getAll();
+      this.luggages=allLuggageResponse.data;
+      console.table(this.luggages)
+    },
+  
     editItem(item) {
       this.editedIndex = this.luggages.indexOf(item);
       this.editedItem = Object.assign({}, item);
@@ -180,13 +185,15 @@ export default {
     },
 
     deleteItem(item) {
-      this.editedIndex = this.luggages.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+      this.itemForDelete=item
       this.dialogDelete = true;
     },
 
-    deleteItemConfirm() {
-      this.luggages.splice(this.editedIndex, 1);
+   async deleteItemConfirm() {
+      if(this.itemForDelete){
+        const response= await LuggageDataService.delete(this.itemForDelete.id)
+        this.refreshTable()
+      }
       this.closeDelete();
     },
 
@@ -200,19 +207,16 @@ export default {
 
     closeDelete() {
       this.dialogDelete = false;
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      });
     },
 
-    save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.luggages[this.editedIndex], this.editedItem);
-      } else {
-        this.luggages.push(this.editedItem);
-      }
+    async save() {
+      const success = this.$refs.data.validate();
+      
+     if(success){
+      const response= await LuggageDataService.update(this.editedItem)
+      this.refreshTable()
       this.close();
+     } 
     },
   },
 };

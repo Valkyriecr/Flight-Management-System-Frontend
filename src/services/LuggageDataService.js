@@ -2,23 +2,23 @@ import http from "../http-common";
 
 class LuggageDataService {
     getAll() {
-        return http.get("/luggage");
+        return http.get("/luggage/all");
     }
 
     get(id) {
-        return http.get(`/luggage/${id}`);
+        return http.get(`/luggage/find/${id}`);
     }
 
     create(data) {
-        return http.post("/luggage", data);
+        return http.post("/luggage/add", data);
     }
 
-    update(id, data) {
-        return http.put(`/luggage/${id}`, data);
+    update(data) {
+        return http.put(`/luggage/update`, data);
     }
 
     delete(id) {
-        return http.delete(`/luggage/${id}`);
+        return http.delete(`/luggage/delete/${id}`);
     }
 
     deleteAll() {
@@ -26,7 +26,7 @@ class LuggageDataService {
     }
 
     findByPassengerId(passengerId) {
-        return http.get(`/luggage?passengerId=${passengerId}`);
+        return http.get(`/luggage/passengerId/${passengerId}`);
     }
 
 }

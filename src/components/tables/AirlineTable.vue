@@ -2,7 +2,7 @@
   <v-data-table
     :headers="headers"
     :items="airlines"
-    sort-by="airlineId"
+    sort-by="id"
     class="elevation-1"
   >
     <template v-slot:top>
@@ -22,22 +22,26 @@
             </v-card-title>
 
             <v-card-text>
+              <v-form ref="data">
               <v-container>
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
                       v-model="editedItem.airlineId"
                       label="Airline ID"
+                      :rules="[ (value) => !!value || 'Required.']"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
                       v-model="editedItem.airlineName"
                       label="Airline Name"
+                      :rules="[ (value) => !!value || 'Required.']"
                     ></v-text-field>
                   </v-col>
                 </v-row>
               </v-container>
+            </v-form>
             </v-card-text>
 
             <v-card-actions>
@@ -77,26 +81,31 @@
 </template>
 
 <script>
+import AirlineDataService from '@/services/AirlineDataService';
 export default {
   data: () => ({
     dialog: false,
     dialogDelete: false,
     headers: [
       {
-        text: "Airline ID",
+        text: "ID",
         align: "start",
-        value: "airlineId",
+        value: "id",
       },
+      { text: "Airline ID", value: "airlineId" },
       { text: "Airline Name", value: "airlineName" },
       { text: "Actions", value: "actions", sortable: false },
     ],
     airlines: [],
+    itemForDelete:{},
     editedIndex: -1,
     editedItem: {
+      id:"",
       airlineId: "",
       airlineName: "",
     },
     defaultItem: {
+      id:"",
       airlineId: "",
       airlineName: "",
     },
@@ -122,21 +131,14 @@ export default {
   },
 
   methods: {
-    initialize() {
-      this.airlines = [
-        {
-          airlineId: "safair",
-          airlineName: "Fly Safair",
-        },
-        {
-          airlineId: "ZAAir",
-          airlineName: "South African Airways",
-        },
-        {
-          airlineId: "king",
-          airlineName: "King Fisher",
-        },
-      ];
+    async initialize() {
+      this.airlines=[];
+      this.refreshTable()
+    },
+    async refreshTable(){
+      const allAirlineResponse = await AirlineDataService.getAll();
+      this.airlines=allAirlineResponse.data;
+      console.table(this.airlines)
     },
 
     editItem(item) {
@@ -146,13 +148,15 @@ export default {
     },
 
     deleteItem(item) {
-      this.editedIndex = this.airlines.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+      this.itemForDelete=item
       this.dialogDelete = true;
     },
 
-    deleteItemConfirm() {
-      this.airlines.splice(this.editedIndex, 1);
+  async  deleteItemConfirm() {
+      if(this.itemForDelete){
+        const response= await AirlineDataService.delete(this.itemForDelete.id)
+        this.refreshTable()
+      }
       this.closeDelete();
     },
 
@@ -166,19 +170,16 @@ export default {
 
     closeDelete() {
       this.dialogDelete = false;
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      });
     },
 
-    save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.airlines[this.editedIndex], this.editedItem);
-      } else {
-        this.airlines.push(this.editedItem);
-      }
+    async save() {
+      const success = this.$refs.data.validate();
+      
+     if(success){
+      const response= await AirlineDataService.update(this.editedItem)
+      this.refreshTable()
       this.close();
+     }
     },
   },
 };

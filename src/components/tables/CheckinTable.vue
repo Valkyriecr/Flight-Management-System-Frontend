@@ -23,7 +23,7 @@
 
             <v-card-text>
               <v-container>
-                <v-row>
+                <v-row>                
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
                       v-model="editedItem.ticketId"
@@ -32,20 +32,14 @@
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
-                      v-model="editedItem.seatId"
-                      label="Seat ID"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      v-model="editedItem.passengerId"
-                      label="Passenger ID"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
                       v-model="editedItem.luggageId"
                       label="Luggage ID"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field
+                      v-model="editedItem.reservedSeat"
+                      label="Reserved Seat"
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -89,34 +83,34 @@
 </template>
 
 <script>
+import CheckInDataService from '@/services/CheckInDataService';
 export default {
   data: () => ({
     dialog: false,
     dialogDelete: false,
     headers: [
       {
-        text: "Ticket ID",
+        text: "ID",
         align: "start",
-        value: "ticketId",
+        value: "id",
       },
-      { text: "Seat ID", value: "seatId" },
-      { text: "Passenger ID", value: "passengerId" },
+      { text: "Ticket ID", value: "ticketId" },
       { text: "Luggage ID", value: "luggageId" },
+      { text: "Reserved Seat", value: "reservedSeat" },
+      
       { text: "Actions", value: "actions", sortable: false },
     ],
     checkins: [],
     editedIndex: -1,
     editedItem: {
       ticketId: "",
-      seatId: "",
-      passengerId: "",
       luggageId: "",
+      reservedSeat: "",
     },
     defaultItem: {
       ticketId: "",
-      seatId: "",
-      passengerId: "",
       luggageId: "",
+      reservedSeat: "",
     },
   }),
 
@@ -140,27 +134,10 @@ export default {
   },
 
   methods: {
-    initialize() {
-      this.checkins = [
-        {
-          ticketId: "Tk001",
-          seatId: "1A",
-          passengerId: "9510095080080",
-          luggageId: "0001",
-        },
-        {
-          ticketId: "Tk002",
-          seatId: "1B",
-          passengerId: "9001595080080",
-          luggageId: "0001",
-        },
-        {
-          ticketId: "Tk003",
-          seatId: "1C",
-          passengerId: "9510905080080",
-          luggageId: "0001",
-        },
-      ];
+    async initialize() {
+      this.checkins = [ ];
+      const allcheckinResponse = await CheckInDataService.getAll();
+      this.checkins=allcheckinResponse.data;
     },
 
     editItem(item) {

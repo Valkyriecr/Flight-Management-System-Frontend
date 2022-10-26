@@ -2,23 +2,23 @@ import http from "../http-common";
 
 class FlightDataService {
     getAll() {
-        return http.get("/flight");
+        return http.get(`/flight/all`);
     }
 
     get(id) {
-        return http.get(`/flight/${id}`);
+        return http.get(`/flight/find/${id}`);
     }
 
     create(data) {
-        return http.post("/flight", data);
+        return http.post(`/flight/add`, data);
     }
 
-    update(id, data) {
-        return http.put(`/flight/${id}`, data);
+    update(data) {
+        return http.put(`/flight/update`, data);
     }
 
     delete(id) {
-        return http.delete(`/flight/${id}`);
+        return http.delete(`/flight/delete/${id}`);
     }
 
     deleteAll() {

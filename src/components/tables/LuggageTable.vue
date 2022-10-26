@@ -175,7 +175,6 @@ export default {
     async refreshTable(){
       const allLuggageResponse = await LuggageDataService.getAll();
       this.luggages=allLuggageResponse.data;
-      console.table(this.luggages)
     },
   
     editItem(item) {

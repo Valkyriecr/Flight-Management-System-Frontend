@@ -108,12 +108,14 @@ export default {
     airports: [],
     editedIndex: -1,
     editedItem: {
+      id:"",
       airportId: "",
       airportName: "",
       cityId: "",
       
     },
     defaultItem: {
+      id:"",
       airportId: "",
       airportName: "", 
       cityId: "",
@@ -147,7 +149,6 @@ export default {
     async refreshTable(){
       const allAirportResponse = await AirportDataService.getAll();
       this.airports=allAirportResponse.data;
-      console.table(this.airports)
     },
 
     editItem(item) {

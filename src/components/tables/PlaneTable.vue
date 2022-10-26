@@ -135,7 +135,6 @@ export default {
     async refreshTable(){
       const allPlaneResponse = await PlaneDataService.getAll();
       this.planes=allPlaneResponse.data;
-      console.table(this.planes)
     },
 
     editItem(item) {

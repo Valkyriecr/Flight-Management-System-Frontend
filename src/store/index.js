@@ -112,7 +112,7 @@ export default new Vuex.Store({
       const passengerResponse= await PassengerDataService.create(passenger);
       commit('saveCheckin', checkin)
       const checkinResponse= await CheckInDataService.create(checkin);
-
+      alert('You are Checked in!')
     },
     addTicketId({ commit }, ticId) {
       commit('findTicketId', ticId)

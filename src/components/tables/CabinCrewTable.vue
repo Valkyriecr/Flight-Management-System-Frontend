@@ -171,7 +171,6 @@ export default {
     async refreshTable(){
       const allCrewResponse = await CrewDataService.getAll();
       this.crews=allCrewResponse.data;
-      console.table(this.crews)
     },
     editItem(item) {
       this.editedIndex = this.crews.indexOf(item);

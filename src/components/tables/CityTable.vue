@@ -105,18 +105,16 @@ export default {
     citys: [],
     editedIndex: -1,
     editedItem: {
-      Id: "",
+      id: "",
       cityId:"",
-      firstName: "",
-      lastName: "",
-      email: "",
+      cityName: "",
+      countryId: "",
     },
     defaultItem: {
-      Id: "",
+      id: "",
       cityId:"",
-      firstName: "",
-      lastName: "",
-      email: "",
+      cityName: "",
+      countryId: "",
     },
   }),
 
@@ -147,7 +145,6 @@ export default {
     async refreshTable(){
       const allCityResponse = await CityDataService.getAll();
       this.citys=allCityResponse.data;
-      console.table(this.citys)
     },
 
     editItem(item) {

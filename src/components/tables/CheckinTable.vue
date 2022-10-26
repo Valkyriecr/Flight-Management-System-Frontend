@@ -145,7 +145,6 @@ export default {
     async refreshTable(){
       const allCheckInResponse = await CheckInDataService.getAll();
       this.checkins=allCheckInResponse.data;
-      console.table(this.checkins)
     },
 
     editItem(item) {

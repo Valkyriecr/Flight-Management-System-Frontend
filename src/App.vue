@@ -67,11 +67,11 @@ export default {
   data: () => ({
     items: [
       { title: "Home", icon: "mdi-home", to: "/" },
-      {
-        title: "Flight Checker",
-        icon: "mdi-airplane-takeoff",
-        to: "/flight-checker",
-      },
+      // {
+      //   title: "Flight Checker",
+      //   icon: "mdi-airplane-takeoff",
+      //   to: "/flight-checker",
+      // },
       { title: "Check-in", icon: "mdi-ticket-confirmation", to: "/check-in" },
       { title: "Admin", icon: "mdi-shield-crown", to: "/admin" },
     ],

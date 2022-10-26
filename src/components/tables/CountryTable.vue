@@ -1,13 +1,13 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="crews"
-    sort-by="crewId"
+    :items="countries"
+    sort-by="id"
     class="elevation-1"
   >
     <template v-slot:top>
       <v-toolbar flat>
-        <v-toolbar-title>Cabin Crews</v-toolbar-title>
+        <v-toolbar-title>Country</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="500px">
@@ -22,28 +22,24 @@
             </v-card-title>
 
             <v-card-text>
+              <v-form ref="data">
               <v-container>
-                <v-row>
+                <v-row>                
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
-                      v-model="editedItem.crewId"
-                      label="Crew ID"
+                      v-model="editedItem.countryId"
+                      label="Country ID"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
-                      v-model="editedItem.flightId"
-                      label="Flight ID"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      v-model="editedItem.staffId"
-                      label="Staff ID"
+                      v-model="editedItem.countryName"
+                      label="Country Name"
                     ></v-text-field>
                   </v-col>
                 </v-row>
               </v-container>
+            </v-form>
             </v-card-text>
 
             <v-card-actions>
@@ -83,31 +79,32 @@
 </template>
 
 <script>
+import CountryDataService from '@/services/CountryDataService';
 export default {
   data: () => ({
     dialog: false,
     dialogDelete: false,
     headers: [
       {
-        text: "Crew ID",
+        text: "ID",
         align: "start",
-        value: "crewId",
+        value: "id",
       },
-      { text: "Flight ID", value: "flightId" },
-      { text: "Staff ID", value: "staffId" },
+      { text: "Country ID", value: "countryId" },
+      { text: "Country Name", value: "countryName" },
       { text: "Actions", value: "actions", sortable: false },
     ],
-    crews: [],
+    countries: [],
     editedIndex: -1,
     editedItem: {
-      crewId: "",
-      flightId: "",
-      staffId: "",
+      id:"",
+      countryId: "",
+      countryName: "",
     },
     defaultItem: {
-      crewId: "",
-      flightId: "",
-      staffId: "",
+      id:"",
+      countryId: "",
+      countryName: "",
     },
   }),
 
@@ -132,39 +129,30 @@ export default {
 
   methods: {
     initialize() {
-      this.crews = [
-        {
-          crewId: "1",
-          flightId: "FA1",
-          staffId: "001",
-        },
-        {
-          crewId: "2",
-          flightId: "FA2",
-          staffId: "002",
-        },
-        {
-          crewId: "3",
-          flightId: "FA3",
-          staffId: "003",
-        },
-      ];
+      this.countries = [];
+    this.refreshTable()
+    },
+    async refreshTable(){
+      const allCountryResponse = await CountryDataService.getAll();
+      this.countries=allCountryResponse.data;
     },
 
     editItem(item) {
-      this.editedIndex = this.crews.indexOf(item);
+      this.editedIndex = this.countries.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
 
     deleteItem(item) {
-      this.editedIndex = this.crews.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+      this.itemForDelete=item
       this.dialogDelete = true;
     },
 
-    deleteItemConfirm() {
-      this.crews.splice(this.editedIndex, 1);
+    async deleteItemConfirm() {
+      if(this.itemForDelete){
+        const response= await CountryDataService.delete(this.itemForDelete.id)
+        this.refreshTable()
+      }
       this.closeDelete();
     },
 
@@ -184,13 +172,14 @@ export default {
       });
     },
 
-    save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.crews[this.editedIndex], this.editedItem);
-      } else {
-        this.crews.push(this.editedItem);
+    async save() {
+    const success = this.$refs.data.validate();
+      
+      if(success){
+       const response= await CountryDataService.update(this.editedItem)
+       this.refreshTable()
+       this.close();
       }
-      this.close();
     },
   },
 };

@@ -154,7 +154,6 @@ export default {
     async refreshTable(){
       const allPassengerResponse = await PassengerDataService.getAll();
       this.passengers=allPassengerResponse.data;
-      console.table(this.passengers)
     },
 
     editItem(item) {

@@ -104,11 +104,13 @@ export default {
     tickets: [],
     editedIndex: -1,
     editedItem: {
+      id:"",
       ticketId: "",
       flightId: "",
       passengerId: "",
     },
     defaultItem: {
+      id:"",
       ticketId: "",
       flightId: "",
       passengerId: "",
@@ -142,7 +144,6 @@ export default {
     async refreshTable(){
       const allTicketResponse = await TicketDataService.getAll();
       this.tickets=allTicketResponse.data;
-      console.table(this.tickets)
     },
 
     editItem(item) {

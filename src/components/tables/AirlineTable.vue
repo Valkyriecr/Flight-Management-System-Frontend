@@ -138,7 +138,6 @@ export default {
     async refreshTable(){
       const allAirlineResponse = await AirlineDataService.getAll();
       this.airlines=allAirlineResponse.data;
-      console.table(this.airlines)
     },
 
     editItem(item) {

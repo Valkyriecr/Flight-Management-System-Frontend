@@ -118,7 +118,6 @@ export default {
     checkin() {
       const success = this.$refs.checkinForm.validate();
       if (this.luggageType != "") {
-        console.log(this.luggageType);
         if (success) {
           var data = {
             ticketId: this.ticketId,
@@ -130,7 +129,6 @@ export default {
             luggageType: this.luggageType,
             email: this.email,
           };
-          console.log(data);
           this.validateCheckin(data)
         }
       } else {

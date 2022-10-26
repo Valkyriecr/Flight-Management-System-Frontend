@@ -15,6 +15,7 @@
 
           <v-text-field
             v-model="password"
+            type="password"
             label="Password"
             hide-details="auto"
             :rules="[rules.required, rules.min]"

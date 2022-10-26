@@ -116,6 +116,7 @@ import LuggageTable from "@/components/tables/LuggageTable.vue";
 import AirlineTable from "@/components/tables/AirlineTable.vue";
 import AirportTable from "@/components/tables/AirportTable.vue";
 import TicketTable from "@/components/tables/TicketTable.vue";
+import { mapGetters } from 'vuex';
 export default {
   components: {
     AirlineTable,
@@ -132,7 +133,7 @@ export default {
     FlightRouteTable,
     SeatTable,
   },
-  data: function () {
+  data () {
     return {
       showAirline: false,
       showAirport: false,
@@ -149,5 +150,15 @@ export default {
       showTicket: false,
     };
   },
+  mounted(){
+    const user = this.$store.getters.getUser
+  if(!user){
+    this.$router.push('/login')
+  }
+
+  },
+  computed:{
+    ...mapGetters['getUser']
+  }
 };
 </script>

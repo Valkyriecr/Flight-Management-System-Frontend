@@ -44,8 +44,8 @@ export default {
           (value && value.length == 13) || "13 Characters Required",
       },
 
-      ticketId: "TK-001",
-      passengerId: "9510095080080",
+      ticketId: "",
+      passengerId: "",
     };
   },
   methods: {

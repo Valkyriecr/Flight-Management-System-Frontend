@@ -3,6 +3,7 @@ import LuggageDataService from '@/services/LuggageDataService'
 import CheckInDataService from '@/services/CheckInDataService'
 import PassengerDataService from '@/services/PassengerDataService'
 import TicketDataService from '@/services/TicketDataService'
+import UserDataService from '@/services/UserDataService'
 import axios from 'axios'
 import Vue from 'vue'
 import Vuex from 'vuex'
@@ -23,10 +24,14 @@ export default new Vuex.Store({
     ticket:'',
     checkin:'',
     passenger:'',
-    luggage:''
+    luggage:'',
+    user:''
 
   },
   getters: {
+    getUser(state){
+      return state.user
+    },
     getTicket(state){
       return state.ticket
     },
@@ -35,6 +40,10 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    saveUser(state,user){
+      state.user=user
+      router.push({ path: '/admin' })
+    },
     saveTicket(state, ticket){
       state.ticket=ticket
     },
@@ -71,6 +80,17 @@ export default new Vuex.Store({
         router.push({ path: '/check-in' })
       }else{
         alert('Ticket and Id do not match')
+      }
+
+    },
+    async validateUser({ commit }, payload) {
+      const response = await UserDataService.findByUsername(payload.username)
+      const user = response.data
+      if (user && user.password === payload.password) {
+        commit('saveUser', user)
+        
+      }else{
+        alert('Username and password do not match')
       }
 
     },
